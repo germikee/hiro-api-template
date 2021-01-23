@@ -25,4 +25,19 @@ class LoginControllerTest extends TestCase
             'data' => ['id', 'name', 'email'],
         ]);
     }
+
+    /** @test */
+    public function it_should_allow_user_to_login_using_username()
+    {
+        $user = User::factory()->create();
+
+        $response = $this->json('POST', 'api/login', [
+            'username' => $user->username,
+            'password' => 'password',
+        ])
+        ->assertOk()
+        ->assertJsonStructure([
+            'data' => ['id', 'name', 'email'],
+        ]);
+    }
 }
